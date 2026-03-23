@@ -38,7 +38,7 @@ class HomeController extends Controller
         ]);
     }
 
-    public function watches(Request $request): Response
+    public function shop(Request $request): Response
     {
         $query = Product::with('primaryImage', 'images')
             ->where('is_listed', true)
@@ -65,7 +65,7 @@ class HomeController extends Controller
         $categories = Category::where('is_listed', true)->get();
         $brands = Brand::where('is_listed', true)->get();
 
-        return Inertia::render('User/Watches', [
+        return Inertia::render('User/Shop', [
             'products' => $products,
             'categories' => $categories,
             'brands' => $brands,

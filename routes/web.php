@@ -48,7 +48,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/watches', [HomeController::class, 'watches'])->name('watches');
+    Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
     Route::post('/search', [HomeController::class, 'search'])->name('search');
 
@@ -111,6 +111,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+        Route::post('banners/{banner}/toggle', [AdminBannerController::class, 'toggle'])->name('banners.toggle');
 
         Route::resource('users', AdminUserController::class)->only(['index']);
         Route::post('users/{user}/block', [AdminUserController::class, 'block'])->name('users.block');

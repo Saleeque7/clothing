@@ -24,7 +24,7 @@ export default function UserLayout({ children }) {
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex flex-col items-center md:items-start">
             <h4 className="text-xl font-black text-indigo-600 tracking-tighter">TIKTIK</h4>
-            <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest font-bold">Premium Timepieces</p>
+            <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest font-bold">Premium Apparel</p>
           </div>
           <div className="flex gap-8 text-sm font-semibold text-gray-500">
             <a href="#" className="hover:text-indigo-600 transition-colors">Privacy</a>

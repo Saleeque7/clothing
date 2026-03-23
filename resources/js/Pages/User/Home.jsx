@@ -30,12 +30,12 @@ export default function Home({ banners, featuredProducts, categories, brands }) 
                     <h2 className="text-4xl sm:text-7xl font-black text-white leading-none tracking-tighter mb-4 max-w-2xl uppercase">
                       {banner.title}
                     </h2>
-                    <p className="text-gray-300 text-lg sm:text-2xl font-semibold mb-8 max-w-xl">Experience the pinnacle of horology.</p>
+                    <p className="text-gray-300 text-lg sm:text-2xl font-semibold mb-8 max-w-xl">Curated high-end fashion for the modern individual.</p>
                     <Link 
-                      href={banner.link ?? route('watches')} 
+                      href={banner.link ?? route('shop')} 
                       className="bg-indigo-600 hover:bg-white hover:text-indigo-600 text-white font-black py-4 px-10 rounded-2xl transition-all duration-300 shadow-xl shadow-indigo-600/20 active:scale-95"
                     >
-                      EXPLORE NOW
+                      EXPLORE COLLECTION
                     </Link>
                   </div>
                 </div>
@@ -44,7 +44,7 @@ export default function Home({ banners, featuredProducts, categories, brands }) 
           ) : (
              <SwiperSlide>
                 <div className="relative h-full w-full flex items-center justify-center bg-gray-950">
-                  <h2 className="text-white text-4xl font-black uppercase tracking-tighter opacity-20">Premium Watches</h2>
+                  <h2 className="text-white text-4xl font-black uppercase tracking-tighter opacity-20">Premium Clothing</h2>
                 </div>
              </SwiperSlide>
           )}
@@ -63,7 +63,7 @@ export default function Home({ banners, featuredProducts, categories, brands }) 
           {categories.slice(0, 4).map(cat => (
             <Link 
               key={cat.id} 
-              href={route('watches', { category: cat.slug })}
+              href={route('shop', { category: cat.slug })}
               className="relative aspect-square rounded-3xl bg-white border border-gray-100 flex flex-col items-center justify-center group hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500"
             >
               <div className="p-8 transform group-hover:scale-110 transition-transform duration-500">
@@ -85,8 +85,8 @@ export default function Home({ banners, featuredProducts, categories, brands }) 
              <h3 className="text-4xl sm:text-5xl font-black text-gray-900 tracking-tighter uppercase leading-none">Trending Now</h3>
              <p className="text-gray-400 font-bold text-xs uppercase tracking-widest mt-2">Most coveted timepieces of the season</p>
           </div>
-          <Link href={route('watches')} className="text-indigo-600 font-black text-sm uppercase tracking-widest hover:translate-x-2 transition-transform inline-flex items-center gap-2">
-            View All Series <span>→</span>
+          <Link href={route('shop')} className="text-indigo-600 font-black text-sm uppercase tracking-widest hover:translate-x-2 transition-transform inline-flex items-center gap-2">
+            View All Apparel <span>→</span>
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

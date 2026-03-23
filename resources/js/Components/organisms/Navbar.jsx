@@ -16,7 +16,7 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           <Link href={route('home')} className="text-sm font-semibold text-gray-700 hover:text-indigo-600 transition-colors">Home</Link>
-          <Link href={route('watches')} className="text-sm font-semibold text-gray-700 hover:text-indigo-600 transition-colors">Watches</Link>
+          <Link href={route('shop')} className="text-sm font-semibold text-gray-700 hover:text-indigo-600 transition-colors">Clothing</Link>
         </div>
 
         <div className="flex items-center gap-4">
