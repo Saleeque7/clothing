@@ -10,7 +10,7 @@ import 'swiper/css/effect-fade';
 export default function Home({ banners, featuredProducts, categories, brands }) {
   return (
     <UserLayout>
-      <Head title="Premium Timepieces" />
+      <Head title="PackPal | Premium Carry Solutions" />
 
       {/* Hero Section */}
       <section className="mb-12 sm:mb-20 overflow-hidden rounded-3xl sm:rounded-[3rem] shadow-2xl bg-gray-900 border border-gray-800">
@@ -30,7 +30,7 @@ export default function Home({ banners, featuredProducts, categories, brands }) 
                     <h2 className="text-4xl sm:text-7xl font-black text-white leading-none tracking-tighter mb-4 max-w-2xl uppercase">
                       {banner.title}
                     </h2>
-                    <p className="text-gray-300 text-lg sm:text-2xl font-semibold mb-8 max-w-xl">Curated high-end fashion for the modern individual.</p>
+                    <p className="text-gray-300 text-lg sm:text-2xl font-semibold mb-8 max-w-xl">Durable, stylish, and premium carry solutions for your every journey.</p>
                     <Link 
                       href={banner.link ?? route('shop')} 
                       className="bg-indigo-600 hover:bg-white hover:text-indigo-600 text-white font-black py-4 px-10 rounded-2xl transition-all duration-300 shadow-xl shadow-indigo-600/20 active:scale-95"
@@ -44,7 +44,7 @@ export default function Home({ banners, featuredProducts, categories, brands }) 
           ) : (
              <SwiperSlide>
                 <div className="relative h-full w-full flex items-center justify-center bg-gray-950">
-                  <h2 className="text-white text-4xl font-black uppercase tracking-tighter opacity-20">Premium Clothing</h2>
+                  <h2 className="text-white text-4xl font-black uppercase tracking-tighter opacity-20">PackPal Essentials</h2>
                 </div>
              </SwiperSlide>
           )}
@@ -83,7 +83,7 @@ export default function Home({ banners, featuredProducts, categories, brands }) 
         <div className="flex flex-col sm:flex-row justify-between items-center sm:items-end mb-12 gap-4">
           <div>
              <h3 className="text-4xl sm:text-5xl font-black text-gray-900 tracking-tighter uppercase leading-none">Trending Now</h3>
-             <p className="text-gray-400 font-bold text-xs uppercase tracking-widest mt-2">Most coveted timepieces of the season</p>
+             <p className="text-gray-400 font-bold text-xs uppercase tracking-widest mt-2">Most coveted essentials of the season</p>
           </div>
           <Link href={route('shop')} className="text-indigo-600 font-black text-sm uppercase tracking-widest hover:translate-x-2 transition-transform inline-flex items-center gap-2">
             View All Apparel <span>→</span>

@@ -7,15 +7,14 @@ import { memberNavList } from '@/constants';
 
 export default function Navbar() {
   const { auth, cartCount, url } = usePage().props;
-  // Get the active user from either guard
-  const user = auth.user || auth.admin;
-  const isAdmin = auth.user?.is_admin || !!auth.admin;
+  const user = auth.user;
+  const isAdmin = user?.is_admin;
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
-        <Link href={route('home')} className="text-2xl font-black text-indigo-600 tracking-tighter hover:scale-105 transition-transform">
-          TIKTIK<span className="text-gray-900 line-through decoration-indigo-300">NEW</span>
+        <Link href={route('home')} className="hover:scale-105 transition-transform flex items-center">
+          <img src="/branding/logo.svg" alt="PackPal" className="h-12 w-auto object-contain" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -26,44 +25,42 @@ export default function Navbar() {
               href={item.href} 
               className={clsx(
                 "text-sm font-bold transition-colors flex items-center gap-2",
-                url === item.href ? "text-indigo-600" : "text-gray-600 hover:text-indigo-600"
+                url === item.href ? "text-[#1D9E75]" : "text-gray-600 hover:text-[#085041]"
               )}
             >
               <FontAwesomeIcon icon={item.icon} className="w-4 h-4 opacity-70" />
               {item.text}
             </Link>
           ))}
-          {isAdmin && (
-            <Link href={route('admin.dashboard')} className="text-sm font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full hover:bg-indigo-100 transition-all border border-indigo-100">Portal</Link>
-          )}
+          {/* Portal link removed for clean public view */}
         </div>
 
         <div className="flex items-center gap-4">
           <Link href="/wishlist" className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all">
             <Heart size={22} />
           </Link>
-          <Link href={route('cart.index')} className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all relative">
+          <Link href={route('cart.index')} className="p-2 text-gray-400 hover:text-[#085041] hover:bg-[#E1F5EE] rounded-full transition-all relative">
             <ShoppingCart size={22} />
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
+              <span className="absolute -top-1 -right-1 bg-[#EF9F27] text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white shadow-sm">
                 {cartCount}
               </span>
             )}
           </Link>
 
-          {user ? (
+          {!isAdmin && user && (
             <div className="flex items-center gap-3">
               <Link href={route('profile.show')} className="hidden sm:flex items-center gap-2 group">
-                <span className="text-xs font-semibold text-gray-600 group-hover:text-indigo-600 transition-colors">{user.name}</span>
-                <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center border border-indigo-200 overflow-hidden">
+                <span className="text-xs font-semibold text-gray-600 group-hover:text-[#1D9E75] transition-colors">{user.name}</span>
+                <div className="w-8 h-8 rounded-full bg-[#E1F5EE] flex items-center justify-center border border-[#5DCAA5]/20 overflow-hidden">
                   {user.image ? 
                     <img src={`/storage/${user.image}`} className="w-full h-full object-cover" alt="" /> :
-                    <User size={16} className="text-indigo-600" />
+                    <User size={16} className="text-[#1D9E75]" />
                   }
                 </div>
               </Link>
               <Link 
-                href={auth.admin ? route('admin.logout') : route('logout')} 
+                href={route('logout')} 
                 method="post" 
                 as="button" 
                 title="Logout" 
@@ -72,10 +69,31 @@ export default function Navbar() {
                 <LogOut size={20} />
               </Link>
             </div>
-          ) : (
-            <Link href={route('login')}>
-              <Button size="sm">Login</Button>
-            </Link>
+          )}
+
+          {isAdmin && (
+            <div className="flex items-center gap-3">
+              <Link 
+                href={route('admin.logout')} 
+                method="post" 
+                as="button" 
+                title="Logout" 
+                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all"
+              >
+                <LogOut size={20} />
+              </Link>
+            </div>
+          )}
+
+          {!user && (
+            <div className="flex items-center gap-2">
+              <Link href={route('register')} className="text-sm font-bold text-gray-500 hover:text-[#085041] transition-colors px-2 py-1">
+                Register
+              </Link>
+              <Link href={route('login')}>
+                <Button size="sm" className="bg-[#1D9E75] hover:bg-[#085041] text-white shadow-lg shadow-[#1D9E75]/20">Login</Button>
+              </Link>
+            </div>
           )}
         </div>
       </div>

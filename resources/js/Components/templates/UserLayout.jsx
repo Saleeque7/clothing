@@ -23,8 +23,8 @@ export default function UserLayout({ children }) {
       <footer className="bg-white border-t border-gray-100 py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex flex-col items-center md:items-start">
-            <h4 className="text-xl font-black text-indigo-600 tracking-tighter">TIKTIK</h4>
-            <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest font-bold">Premium Apparel</p>
+            <h4 className="text-xl font-black text-[#1D9E75] tracking-tighter uppercase italic">PACKPAL</h4>
+            <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest font-bold">Premium Carry Store</p>
           </div>
           <div className="flex gap-8 text-sm font-semibold text-gray-500">
             <a href="#" className="hover:text-indigo-600 transition-colors">Privacy</a>
@@ -32,7 +32,7 @@ export default function UserLayout({ children }) {
             <a href="#" className="hover:text-indigo-600 transition-colors">Support</a>
           </div>
           <p className="text-xs font-bold text-gray-400 text-center uppercase tracking-widest">
-            © {new Date().getFullYear()} TIKTIKNEW. ALL RIGHTS RESERVED.
+            © {new Date().getFullYear()} PACKPAL. ALL RIGHTS RESERVED.
           </p>
         </div>
       </footer>

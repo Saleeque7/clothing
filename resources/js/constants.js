@@ -1,10 +1,7 @@
 import { 
   faHome, 
   faStore, 
-  faShoppingCart, 
-  faHeart, 
   faClipboardList, 
-  faUser, 
   faWallet, 
   faChartLine, 
   faUsers, 
@@ -25,24 +22,21 @@ export const DEVELOPER_USER = 3;
 export const memberNavList = [
   { text: "Home", icon: faHome, href: "/" },
   { text: "Shop", icon: faStore, href: "/shop" },
-  { text: "My Cart", icon: faShoppingCart, href: "/cart" },
-  { text: "Wishlist", icon: faHeart, href: "/wishlist" },
   { text: "My Orders", icon: faClipboardList, href: "/orders" },
   { text: "Wallet history", icon: faWallet, href: "/wallet/history" },
-  { text: "Profile", icon: faUser, href: "/profile" },
 ];
 
 // Admin Sidebar Links (Available for Admin/Developer roles)
 export const navList = [
-  { text: "Dashboard", href: "/admin/dashboard", icon: faChartLine },
-  { text: "Users Management", href: "/admin/users", icon: faUsers },
-  { text: "Categories", href: "/admin/categories", icon: faList },
-  { text: "Brands", href: "/admin/brands", icon: faTags },
-  { text: "Products", href: "/admin/products", icon: faBox },
-  { text: "Orders Management", href: "/admin/orders", icon: faClipboardList },
-  { text: "Coupons", href: "/admin/coupons", icon: faTicketAlt },
-  { text: "Banners", href: "/admin/banners", icon: faImages },
-  { text: "Sales Report", href: "/admin/sales-report", icon: faFileInvoiceDollar },
+  { text: "Dashboard", href: "/portal/dashboard", icon: faChartLine },
+  { text: "Users Management", href: "/portal/users", icon: faUsers },
+  { text: "Categories", href: "/portal/categories", icon: faList },
+  { text: "Brands", href: "/portal/brands", icon: faTags },
+  { text: "Products", href: "/portal/products", icon: faBox },
+  { text: "Orders Management", href: "/portal/orders", icon: faClipboardList },
+  { text: "Coupons", href: "/portal/coupons", icon: faTicketAlt },
+  { text: "Banners", href: "/portal/banners", icon: faImages },
+  { text: "Sales Report", href: "/portal/sales-report", icon: faFileInvoiceDollar },
 ];
 
 // Role-Based Permissions Mapping

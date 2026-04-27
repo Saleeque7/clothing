@@ -13,7 +13,7 @@ export default function Shop({ products, categories, brands, filters }) {
 
   return (
     <UserLayout>
-      <Head title="Premium Clothing Collection" />
+      <Head title="PackPal Shop | Premium Carry Solutions" />
 
       <div className="flex flex-col gap-12">
         {/* Header Area */}
@@ -22,7 +22,7 @@ export default function Shop({ products, categories, brands, filters }) {
               <h1 className="text-5xl font-black text-gray-900 tracking-tighter uppercase leading-none mb-4">
                  Our <span className="text-indigo-600">Collection</span>
               </h1>
-              <p className="text-gray-400 font-bold text-xs uppercase tracking-[0.2em]">Curated high-end fashion for the modern individual</p>
+              <p className="text-gray-400 font-bold text-xs uppercase tracking-[0.2em]">Curated high-performance gear for every journey.</p>
            </div>
            
            <div className="flex items-center gap-4 w-full md:w-auto">
@@ -30,7 +30,7 @@ export default function Shop({ products, categories, brands, filters }) {
                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors" size={20} />
                  <input 
                     type="text" 
-                    placeholder="Search apparel..." 
+                    placeholder="Search essentials..." 
                     className="w-full bg-white border border-gray-100 rounded-2xl pl-12 pr-4 py-4 text-sm font-semibold shadow-sm focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-sans"
                     value={search}
                     onChange={e => setSearch(e.target.value)}
@@ -52,7 +52,7 @@ export default function Shop({ products, categories, brands, filters }) {
                        onClick={() => handleFilter('category', null)}
                        className={`text-left py-2 px-4 rounded-xl text-sm font-bold uppercase tracking-tighter transition-all ${!filters.category ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-gray-900'}`}
                     >
-                       All Outfits
+                       All Collections
                     </button>
                     {categories.map(cat => (
                        <button 
@@ -68,7 +68,7 @@ export default function Shop({ products, categories, brands, filters }) {
 
               <div>
                  <h3 className="text-sm font-black text-gray-900 uppercase tracking-widest mb-6 flex items-center gap-2">
-                    <LayoutGrid size={16} className="text-indigo-600" /> Luxury Brands
+                    <LayoutGrid size={16} className="text-indigo-600" /> Partner Brands
                  </h3>
                  <div className="flex flex-wrap gap-2">
                     {brands.map(brand => (
@@ -87,7 +87,7 @@ export default function Shop({ products, categories, brands, filters }) {
            {/* Product Grid */}
            <div className="lg:col-span-3">
               <div className="flex justify-between items-center mb-10 text-xs font-black text-gray-400 uppercase tracking-widest">
-                 <span>Showing {products.from ?? 0}–{products.to ?? 0} of {products.total} Pieces</span>
+                 <span>Showing {products.from ?? 0}–{products.to ?? 0} of {products.total} Products</span>
                  <div className="flex items-center gap-2 cursor-pointer hover:text-indigo-600 transition-colors">
                     Sort by: Latest <ChevronDown size={14} />
                  </div>
@@ -100,7 +100,7 @@ export default function Shop({ products, categories, brands, filters }) {
                     ))
                  ) : (
                     <div className="col-span-full py-20 text-center bg-white rounded-[2.5rem] border border-gray-100 border-dashed">
-                       <p className="text-gray-300 font-bold uppercase tracking-widest">No garments match your criteria</p>
+                       <p className="text-gray-300 font-bold uppercase tracking-widest">No products match your criteria</p>
                     </div>
                  )}
               </div>

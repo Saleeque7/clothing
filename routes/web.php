@@ -46,13 +46,13 @@ Route::group(['prefix' => 'wishlist', 'as' => 'wishlist.'], function () {
 
 // ── AUTH (Universal Gateway) ────────────────────────────────────────────────
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login']); 
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-// ── CUSTOMER FEATURES (Login Required for Orders & Profile) ──────────────────
-Route::middleware(['auth:web'])->group(function () {
+// ── CUSTOMER FEATURES (Login Required) ──────────────────────────────────────
+Route::middleware(['auth'])->group(function () {
     // Orders
     Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
         Route::post('/place', [OrderController::class, 'place'])->name('place');
@@ -84,13 +84,13 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('/apply-coupon', [CouponController::class, 'apply'])->name('coupon.apply');
 });
 
-// ── MANAGEMENT PORTAL ──────────────────────────────────────────────────────
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+// ── MANAGEMENT PORTAL ────────────────────────────────────────────────────────
+Route::group(['prefix' => 'portal', 'as' => 'admin.'], function () {
     // Admin Login (Universal View)
     Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AdminAuthController::class, 'login'])->name('login');
 
-    Route::middleware(['auth:admin'])->group(function () {
+    Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
         

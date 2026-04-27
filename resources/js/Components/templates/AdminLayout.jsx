@@ -10,10 +10,10 @@ const SidebarItem = ({ href, icon, children, active, collapsed }) => (
   <Link 
     href={href} 
     className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 ${
-      active ? 'bg-indigo-50 text-indigo-700 shadow-sm' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+      active ? 'bg-[#E1F5EE] text-[#085041] shadow-sm' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
     } ${collapsed ? 'justify-center mx-2' : 'mx-3'}`}
   >
-    <FontAwesomeIcon icon={icon} className={`w-4 h-4 flex-shrink-0 ${active ? 'text-indigo-600' : 'text-slate-400'}`} />
+    <FontAwesomeIcon icon={icon} className={`w-4 h-4 flex-shrink-0 ${active ? 'text-[#1D9E75]' : 'text-slate-400'}`} />
     {!collapsed && <span className="font-semibold text-[13px] tracking-tight">{children}</span>}
   </Link>
 );
@@ -21,7 +21,7 @@ const SidebarItem = ({ href, icon, children, active, collapsed }) => (
 export default function AdminLayout({ children }) {
   const { props, url } = usePage();
   const { flash, auth } = props;
-  const admin = auth.admin;
+  const admin = auth.user;
   const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
@@ -48,8 +48,7 @@ export default function AdminLayout({ children }) {
         <div className={`flex items-center mb-8 px-6 ${collapsed ? 'justify-center' : 'justify-between'}`}>
            {!collapsed && (
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 bg-indigo-600 rounded flex items-center justify-center text-white font-bold text-xs">T</div>
-                <span className="font-bold text-slate-900 tracking-tight text-lg">Staff Portal</span>
+                <img src="/branding/logo.svg" alt="PackPal" className="h-10 w-auto object-contain" />
               </div>
            )}
            <button 
@@ -67,7 +66,7 @@ export default function AdminLayout({ children }) {
                href={item.href} 
                icon={item.icon} 
                collapsed={collapsed}
-               active={url === item.href || (item.href !== '/admin/dashboard' && url.startsWith(item.href))}
+               active={url === item.href || (item.href !== '/portal/dashboard' && url.startsWith(item.href))}
              >
                {item.text}
              </SidebarItem>

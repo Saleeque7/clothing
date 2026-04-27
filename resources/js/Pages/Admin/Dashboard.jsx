@@ -63,12 +63,12 @@ const chartData = {
       fill: true,
       label: 'Revenue',
       data: [3000, 4500, 3200, 7800, 5600, 9000, 12000],
-      borderColor: '#4f46e5',
-      backgroundColor: 'rgba(79, 70, 229, 0.03)',
+      borderColor: '#1D9E75',
+      backgroundColor: 'rgba(29, 158, 117, 0.05)',
       tension: 0.4,
       pointRadius: 0,
       pointHoverRadius: 6,
-      pointHoverBackgroundColor: '#4f46e5',
+      pointHoverBackgroundColor: '#1D9E75',
       pointHoverBorderColor: '#fff',
       pointHoverBorderWidth: 3,
     },
@@ -102,7 +102,7 @@ export default function Dashboard({ stats }) {
           title="Gross Revenue" 
           value={`₹${stats.revenue.toLocaleString()}`} 
           icon={Coins} 
-          color="bg-indigo-600" 
+          color="bg-[#085041]" 
           trend={12} 
         />
         <StatCard 
@@ -123,7 +123,7 @@ export default function Dashboard({ stats }) {
           title="Product Catalog" 
           value={stats.products} 
           icon={TrendingUp} 
-          color="bg-indigo-700" 
+          color="bg-[#1D9E75]" 
         />
       </div>
 
@@ -146,9 +146,9 @@ export default function Dashboard({ stats }) {
           <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-8">Top Products</h3>
           <div className="flex flex-col gap-4">
              {[
-               { name: 'Oversized Cotton Tee', brand: 'Premium Fit', price: '₹1,500' },
-               { name: 'Slim Denim Jacket', brand: 'Style Co', price: '₹3,200' },
-               { name: 'Cargo Joggers', brand: 'Urban Utility', price: '₹2,400' }
+               { name: 'Apex Hiking Pack', brand: 'PackPal Pro', price: '₹4,500' },
+               { name: 'Nomad Daily Tote', brand: 'Urban Carry', price: '₹2,200' },
+               { name: 'Insulated Flask 1L', brand: 'HydraFlow', price: '₹1,400' }
              ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-4 group p-2 hover:bg-slate-50 rounded-xl transition-colors">
                    <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 font-bold border border-slate-200 group-hover:scale-105 transition-transform overflow-hidden">
@@ -158,7 +158,7 @@ export default function Dashboard({ stats }) {
                       <p className="font-bold text-xs text-slate-900">{item.name}</p>
                       <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">{item.brand}</p>
                    </div>
-                   <p className="font-bold text-sm text-indigo-600">{item.price}</p>
+                   <p className="font-bold text-sm text-[#1D9E75]">{item.price}</p>
                 </div>
              ))}
           </div>

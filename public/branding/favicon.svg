@@ -1,0 +1,27 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <title>PackPal Favicon</title>
+  <desc>PackPal favicon transparent background</desc>
+
+  <!-- Circle base -->
+  <circle cx="32" cy="32" r="32" fill="#085041"/>
+  <circle cx="32" cy="32" r="28" fill="none" stroke="#1D9E75" stroke-width="1.2"/>
+
+  <!-- Water bottle (left) -->
+  <rect x="10" y="16" width="14" height="5" rx="2.5" fill="#5DCAA5"/>
+  <rect x="8" y="21" width="18" height="28" rx="5" fill="#1D9E75"/>
+  <rect x="11" y="26" width="12" height="2.5" rx="1" fill="#9FE1CB" opacity="0.5"/>
+  <rect x="11" y="31" width="8" height="2" rx="1" fill="#9FE1CB" opacity="0.35"/>
+  <rect x="9" y="22" width="16" height="4" rx="2" fill="#5DCAA5" opacity="0.5"/>
+
+  <!-- Backpack (right) -->
+  <rect x="34" y="18" width="22" height="26" rx="5" fill="#EF9F27"/>
+  <path d="M34 28 Q45 20 56 28" fill="none" stroke="#BA7517" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M40 18 Q45 10 50 18" fill="none" stroke="#EF9F27" stroke-width="3" stroke-linecap="round"/>
+  <path d="M40 18 Q45 10 50 18" fill="none" stroke="#BA7517" stroke-width="1.2" stroke-linecap="round"/>
+  <rect x="38" y="34" width="14" height="8" rx="3" fill="#BA7517" opacity="0.65"/>
+  <rect x="41" y="29" width="8" height="4" rx="1.5" fill="#633806"/>
+  <rect x="43" y="30" width="4" height="2" rx="1" fill="#EF9F27"/>
+
+  <!-- Sparkle -->
+  <circle cx="32" cy="8" r="2.5" fill="#5DCAA5" opacity="0.85"/>
+</svg>
