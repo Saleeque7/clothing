@@ -67,7 +67,7 @@ export const allowedUsers = {
 export const pagesWithoutMenu = [
   "/login",
   "/register",
-  "/admin/login",
+  "/portal/login",
   "/otp",
   "/forgot-password",
   "/reset-password",
