@@ -36,6 +36,7 @@ class HandleInertiaRequests extends Middleware
                     'id' => $request->user('web')->id,
                     'name' => $request->user('web')->name,
                     'email' => $request->user('web')->email,
+                    'role_id' => $request->user('web')->role_id,
                     'image' => $request->user('web')->image,
                     'is_admin' => $request->user('web')->is_admin,
                 ] : null,
@@ -43,10 +44,12 @@ class HandleInertiaRequests extends Middleware
                     'id' => $request->user('admin')->id,
                     'name' => $request->user('admin')->name,
                     'email' => $request->user('admin')->email,
+                    'role_id' => $request->user('admin')->role_id,
                 ] : null,
                 'developer' => $request->user('developer') ? [
                     'id' => $request->user('developer')->id,
                     'name' => $request->user('developer')->name,
+                    'role_id' => $request->user('developer')->role_id,
                 ] : null,
             ],
             'flash' => [

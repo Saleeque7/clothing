@@ -1,32 +1,105 @@
 import AdminLayout from '@/Components/templates/AdminLayout';
 import { Head } from '@inertiajs/react';
-import { TrendingUp, ShoppingBag, Users, Coins } from 'lucide-react';
+import { TrendingUp, ShoppingBag, Users, Coins, Search } from 'lucide-react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
+);
+
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      backgroundColor: '#1e293b',
+      titleFont: { size: 12, weight: 'bold' },
+      bodyFont: { size: 12 },
+      padding: 12,
+      cornerRadius: 8,
+      displayColors: false,
+    }
+  },
+  scales: {
+    x: { 
+        grid: { display: false },
+        ticks: { font: { size: 10, weight: '600' }, color: '#94a3b8' }
+    },
+    y: { 
+      beginAtZero: true,
+      grid: { color: '#f1f5f9', drawBorder: false },
+      ticks: { 
+        font: { size: 10, weight: '600' }, 
+        color: '#94a3b8',
+        callback: (val) => `₹${val}` 
+      }
+    }
+  }
+};
+
+const chartData = {
+  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  datasets: [
+    {
+      fill: true,
+      label: 'Revenue',
+      data: [3000, 4500, 3200, 7800, 5600, 9000, 12000],
+      borderColor: '#4f46e5',
+      backgroundColor: 'rgba(79, 70, 229, 0.03)',
+      tension: 0.4,
+      pointRadius: 0,
+      pointHoverRadius: 6,
+      pointHoverBackgroundColor: '#4f46e5',
+      pointHoverBorderColor: '#fff',
+      pointHoverBorderWidth: 3,
+    },
+  ],
+};
 
 const StatCard = ({ title, value, icon: Icon, color, trend }) => (
-  <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500 group">
+  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-[0_2px_4px_rgba(0,0,0,0.02)] hover:shadow-md transition-all duration-300">
     <div className="flex justify-between items-start mb-4">
-      <div className={`w-14 h-14 rounded-2xl ${color} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-500`}>
-        <Icon size={24} />
+      <div className={`w-10 h-10 rounded-lg ${color} flex items-center justify-center text-white shadow-sm`}>
+        <Icon size={18} />
       </div>
       {trend && (
-        <span className="flex items-center gap-1 text-green-600 font-bold text-sm bg-green-50 px-2 py-1 rounded-lg">
+        <span className="flex items-center gap-1 text-emerald-600 font-bold text-[10px] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">
            +{trend}%
         </span>
       )}
     </div>
-    <h3 className="text-gray-400 font-bold text-xs uppercase tracking-[0.2em] mb-1">{title}</h3>
-    <p className="text-3xl font-black text-gray-900 tracking-tighter">{value}</p>
+    <h3 className="text-slate-500 font-bold text-[10px] uppercase tracking-wider mb-1">{title}</h3>
+    <p className="text-2xl font-black text-slate-900 tracking-tight">{value}</p>
   </div>
 );
 
 export default function Dashboard({ stats }) {
   return (
     <AdminLayout>
-      <Head title="Admin Dashboard" />
+      <Head title="Performance Dashboard" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard 
-          title="Revenue" 
+          title="Gross Revenue" 
           value={`₹${stats.revenue.toLocaleString()}`} 
           icon={Coins} 
           color="bg-indigo-600" 
@@ -36,54 +109,58 @@ export default function Dashboard({ stats }) {
           title="Total Orders" 
           value={stats.total_orders} 
           icon={ShoppingBag} 
-          color="bg-green-600" 
+          color="bg-slate-950" 
           trend={15.4} 
         />
         <StatCard 
           title="Active Users" 
           value={stats.users} 
           icon={Users} 
-          color="bg-orange-500" 
+          color="bg-slate-600" 
           trend={2} 
         />
         <StatCard 
-          title="Total Inventory" 
+          title="Product Catalog" 
           value={stats.products} 
           icon={TrendingUp} 
-          color="bg-blue-600" 
+          color="bg-indigo-700" 
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm">
-           <div className="flex justify-between items-center mb-10">
-              <h3 className="text-xl font-black text-gray-900 tracking-tight uppercase">Sales Overview</h3>
-              <select className="bg-gray-50 border-none rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-2">
-                 <option>Last 30 Days</option>
-                 <option>This Year</option>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 bg-white rounded-2xl p-8 border border-slate-200 shadow-sm flex flex-col">
+           <div className="flex justify-between items-center mb-8">
+              <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest">Sales Performance</h3>
+              <select className="bg-slate-50 border border-slate-200 rounded-lg font-bold text-[10px] uppercase tracking-wider px-3 py-1.5 focus:ring-2 focus:ring-indigo-500 transition-all outline-none">
+                 <option>Monthly Analysis</option>
+                 <option>Quarterly Insights</option>
               </select>
            </div>
            
-           <div className="h-80 flex items-center justify-center bg-gray-50 rounded-3xl border border-dashed border-gray-200">
-              <p className="text-gray-400 font-bold text-xs uppercase tracking-widest">Analytics Visualization Loading...</p>
+           <div className="flex-1 h-80 min-h-[350px]">
+              <Line options={chartOptions} data={chartData} />
            </div>
         </div>
 
-        <div className="bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50/50 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
-          <h3 className="text-xl font-black text-gray-900 tracking-tight uppercase mb-8 relative z-10">Top Selling</h3>
-          <div className="flex flex-col gap-6 relative z-10">
-             <div className="flex items-center gap-4 group">
-                <div className="w-12 h-12 rounded-xl bg-gray-100 overflow-hidden group-hover:scale-110 transition-transform">
-                   <img src="https://placehold.co/100x100?text=Apparel" alt="" />
+        <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-8">Top Products</h3>
+          <div className="flex flex-col gap-4">
+             {[
+               { name: 'Oversized Cotton Tee', brand: 'Premium Fit', price: '₹1,500' },
+               { name: 'Slim Denim Jacket', brand: 'Style Co', price: '₹3,200' },
+               { name: 'Cargo Joggers', brand: 'Urban Utility', price: '₹2,400' }
+             ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-4 group p-2 hover:bg-slate-50 rounded-xl transition-colors">
+                   <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 font-bold border border-slate-200 group-hover:scale-105 transition-transform overflow-hidden">
+                      <Search size={16} />
+                   </div>
+                   <div className="flex-1">
+                      <p className="font-bold text-xs text-slate-900">{item.name}</p>
+                      <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">{item.brand}</p>
+                   </div>
+                   <p className="font-bold text-sm text-indigo-600">{item.price}</p>
                 </div>
-                <div className="flex-1">
-                   <p className="font-bold text-sm text-gray-800 uppercase tracking-tighter">Premium Cotton Tee</p>
-                   <p className="text-xs text-gray-400 font-medium">Oversized Fit</p>
-                </div>
-                <p className="font-black text-sm text-indigo-600">₹1,500</p>
-             </div>
-             {/* Repeat more items here */}
+             ))}
           </div>
         </div>
       </div>

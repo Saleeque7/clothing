@@ -14,7 +14,9 @@ class AdminAuthController extends Controller
 {
     public function showLogin(): Response
     {
-        return Inertia::render('Admin/Login');
+        return Inertia::render('Auth/Login', [
+            'isAdminPortal' => true
+        ]);
     }
 
     public function login(AdminLoginRequest $request): RedirectResponse

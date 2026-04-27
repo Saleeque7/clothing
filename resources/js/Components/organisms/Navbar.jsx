@@ -1,10 +1,12 @@
 import { Link, usePage } from '@inertiajs/react';
 import { ShoppingCart, Heart, User, Search, LogOut } from 'lucide-react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { clsx } from 'clsx';
 import Button from '@/Components/atoms/Button';
+import { memberNavList } from '@/constants';
 
 export default function Navbar() {
-  const { auth, cartCount } = usePage().props;
+  const { auth, cartCount, url } = usePage().props;
   // Get the active user from either guard
   const user = auth.user || auth.admin;
   const isAdmin = auth.user?.is_admin || !!auth.admin;
@@ -17,11 +19,22 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          <Link href={route('home')} className="text-sm font-semibold text-gray-700 hover:text-indigo-600 transition-colors">Home</Link>
-          <Link href={route('shop')} className="text-sm font-semibold text-gray-700 hover:text-indigo-600 transition-colors">Clothing</Link>
+        <div className="hidden md:flex items-center gap-6">
+          {memberNavList.map((item, index) => (
+            <Link 
+              key={index} 
+              href={item.href} 
+              className={clsx(
+                "text-sm font-bold transition-colors flex items-center gap-2",
+                url === item.href ? "text-indigo-600" : "text-gray-600 hover:text-indigo-600"
+              )}
+            >
+              <FontAwesomeIcon icon={item.icon} className="w-4 h-4 opacity-70" />
+              {item.text}
+            </Link>
+          ))}
           {isAdmin && (
-            <Link href={route('admin.dashboard')} className="text-sm font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full hover:bg-indigo-100 transition-colors">Admin Panel</Link>
+            <Link href={route('admin.dashboard')} className="text-sm font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full hover:bg-indigo-100 transition-all border border-indigo-100">Portal</Link>
           )}
         </div>
 

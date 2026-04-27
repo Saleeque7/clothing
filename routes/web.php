@@ -20,54 +20,39 @@ use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminCouponController;
 use App\Http\Controllers\Admin\AdminBannerController;
 use App\Http\Controllers\Admin\SalesReportController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-// ── AUTH (Public) ───────────────────────────────────────────────────────────
-Route::middleware('guest:web')->group(function () {
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
-    
-    // OTP / Password Recovery
-    Route::get('/otp', [AuthController::class, 'showOtp'])->name('otp');
-    Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
-    Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
-    
-    Route::get('/forgot-password', [AuthController::class, 'showForgot'])->name('password.request');
-    Route::post('/forgot-password', [AuthController::class, 'sendForgotOtp']);
-    Route::get('/forgot-otp', [AuthController::class, 'showForgotOtp']);
-    Route::post('/verify-forgot-otp', [AuthController::class, 'verifyForgotOtp']);
-    Route::get('/reset-password', [AuthController::class, 'showReset'])->name('password.reset');
-    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+// ── PUBLIC STOREFRONT ────────────────────────────────────────────────────────
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::post('/search', [HomeController::class, 'search'])->name('search');
+
+// Cart (Public)
+Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
+    Route::get('/', [CartController::class, 'index'])->name('index');
+    Route::post('/add', [CartController::class, 'add'])->name('add');
+    Route::delete('/remove/{product}', [CartController::class, 'remove'])->name('remove');
+    Route::post('/update-quantity/{operation}', [CartController::class, 'updateQuantity'])->name('update-quantity');
+    Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
 });
 
-// ── USER (Protected) ────────────────────────────────────────────────────────
+// Wishlist (Public)
+Route::group(['prefix' => 'wishlist', 'as' => 'wishlist.'], function () {
+    Route::get('/', [WishlistController::class, 'index'])->name('index');
+    Route::post('/add', [WishlistController::class, 'add'])->name('add');
+    Route::delete('/remove/{product}', [WishlistController::class, 'remove'])->name('remove');
+});
+
+// ── AUTH (Universal Gateway) ────────────────────────────────────────────────
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']); 
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+
+// ── CUSTOMER FEATURES (Login Required for Orders & Profile) ──────────────────
 Route::middleware(['auth:web'])->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
-    Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
-    Route::post('/search', [HomeController::class, 'search'])->name('search');
-
-    // Cart
-    Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
-        Route::get('/', [CartController::class, 'index'])->name('index');
-        Route::post('/add', [CartController::class, 'add'])->name('add');
-        Route::delete('/remove/{product}', [CartController::class, 'remove'])->name('remove');
-        Route::post('/update-quantity/{operation}', [CartController::class, 'updateQuantity'])->name('update-quantity');
-        Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
-    });
-
-    // Wishlist
-    Route::group(['prefix' => 'wishlist', 'as' => 'wishlist.'], function () {
-        Route::get('/', [WishlistController::class, 'index'])->name('index');
-        Route::post('/add', [WishlistController::class, 'add'])->name('add');
-        Route::delete('/remove/{product}', [WishlistController::class, 'remove'])->name('remove');
-    });
-
     // Orders
     Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
         Route::post('/place', [OrderController::class, 'place'])->name('place');
@@ -94,39 +79,28 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/edit', [ProfileController::class, 'update'])->name('profile.update');
-    
     Route::get('/wallet/history', [WalletController::class, 'history'])->name('wallet.history');
     Route::post('/wallet/add-money', [WalletController::class, 'addMoney'])->name('wallet.add-money');
-    
     Route::post('/apply-coupon', [CouponController::class, 'apply'])->name('coupon.apply');
 });
 
-// ── ADMIN (Protected) ───────────────────────────────────────────────────────
+// ── MANAGEMENT PORTAL ──────────────────────────────────────────────────────
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::middleware('guest:admin')->group(function () {
-        Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
-        Route::post('/login', [AdminAuthController::class, 'login']);
-    });
+    // Admin Login (Universal View)
+    Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('login');
 
-    Route::middleware(['auth:admin', 'admin'])->group(function () {
+    Route::middleware(['auth:admin'])->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
-        Route::post('banners/{banner}/toggle', [AdminBannerController::class, 'toggle'])->name('banners.toggle');
-
+        
         Route::resource('users', AdminUserController::class)->only(['index']);
-        Route::post('users/{user}/block', [AdminUserController::class, 'block'])->name('users.block');
-        Route::post('users/{user}/unblock', [AdminUserController::class, 'unblock'])->name('users.unblock');
-
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('brands', AdminBrandController::class);
         Route::resource('products', AdminProductController::class);
         Route::resource('orders', AdminOrderController::class);
         Route::resource('coupons', AdminCouponController::class);
         Route::resource('banners', AdminBannerController::class);
-
         Route::get('/sales-report', [SalesReportController::class, 'index'])->name('sales-report.index');
-        Route::get('/sales-report/download/{type}', [SalesReportController::class, 'download'])->name('sales-report.download');
     });
 });
-
-require __DIR__.'/auth.php';
