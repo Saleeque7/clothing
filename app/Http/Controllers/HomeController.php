@@ -12,8 +12,12 @@ use Inertia\Response;
 
 class HomeController extends Controller
 {
-    public function index(): Response
+    public function index(): Response|\Illuminate\Http\RedirectResponse
     {
+        if (auth()->check() && auth()->user()->is_admin) {
+            return redirect()->route('admin.dashboard');
+        }
+
         $banners = Banner::where('is_active', true)->latest()->get();
         $featuredProducts = Product::with('primaryImage', 'images')
             ->where('is_listed', true)

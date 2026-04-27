@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\AdminLoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -17,23 +17,23 @@ class AdminAuthController extends Controller
         return Inertia::render('Admin/Login');
     }
 
-    public function login(LoginRequest $request): RedirectResponse
+    public function login(AdminLoginRequest $request): RedirectResponse
     {
         $request->authenticate();
 
-        if (!auth()->user()->is_admin) {
-            Auth::logout();
+        if (!Auth::guard('admin')->user()->is_admin) {
+            Auth::guard('admin')->logout();
             return back()->withErrors(['email' => 'Access denied. You do not have administrator privileges.']);
         }
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('admin.dashboard'));
+        return redirect()->route('admin.dashboard');
     }
 
     public function logout(Request $request): RedirectResponse
     {
-        Auth::logout();
+        Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('admin.login');

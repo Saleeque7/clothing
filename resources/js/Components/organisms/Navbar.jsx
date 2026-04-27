@@ -5,6 +5,9 @@ import Button from '@/Components/atoms/Button';
 
 export default function Navbar() {
   const { auth, cartCount } = usePage().props;
+  // Get the active user from either guard
+  const user = auth.user || auth.admin;
+  const isAdmin = auth.user?.is_admin || !!auth.admin;
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
@@ -17,6 +20,9 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           <Link href={route('home')} className="text-sm font-semibold text-gray-700 hover:text-indigo-600 transition-colors">Home</Link>
           <Link href={route('shop')} className="text-sm font-semibold text-gray-700 hover:text-indigo-600 transition-colors">Clothing</Link>
+          {isAdmin && (
+            <Link href={route('admin.dashboard')} className="text-sm font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full hover:bg-indigo-100 transition-colors">Admin Panel</Link>
+          )}
         </div>
 
         <div className="flex items-center gap-4">
@@ -32,18 +38,24 @@ export default function Navbar() {
             )}
           </Link>
 
-          {auth?.user ? (
+          {user ? (
             <div className="flex items-center gap-3">
               <Link href={route('profile.show')} className="hidden sm:flex items-center gap-2 group">
-                <span className="text-xs font-semibold text-gray-600 group-hover:text-indigo-600 transition-colors">{auth.user.name}</span>
+                <span className="text-xs font-semibold text-gray-600 group-hover:text-indigo-600 transition-colors">{user.name}</span>
                 <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center border border-indigo-200 overflow-hidden">
-                  {auth.user.image ? 
-                    <img src={`/storage/${auth.user.image}`} className="w-full h-full object-cover" alt="" /> :
+                  {user.image ? 
+                    <img src={`/storage/${user.image}`} className="w-full h-full object-cover" alt="" /> :
                     <User size={16} className="text-indigo-600" />
                   }
                 </div>
               </Link>
-              <Link href={route('logout')} method="post" as="button" title="Logout" className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all">
+              <Link 
+                href={auth.admin ? route('admin.logout') : route('logout')} 
+                method="post" 
+                as="button" 
+                title="Logout" 
+                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all"
+              >
                 <LogOut size={20} />
               </Link>
             </div>

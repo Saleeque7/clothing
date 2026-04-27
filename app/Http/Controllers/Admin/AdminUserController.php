@@ -12,7 +12,7 @@ class AdminUserController extends Controller
 {
     public function index(): Response
     {
-        $users = User::where('is_admin', false)
+        $users = User::where('role_id', \App\Models\Role::CUSTOMER)
             ->latest()
             ->paginate(10);
 

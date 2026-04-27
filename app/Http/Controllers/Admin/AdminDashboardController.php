@@ -16,7 +16,7 @@ class AdminDashboardController extends Controller
         $stats = [
             'total_orders' => Order::count(),
             'revenue' => Order::where('status', 'Delivered')->sum('total_amount'),
-            'users' => User::where('is_admin', false)->count(),
+            'users' => User::where('role_id', \App\Models\Role::CUSTOMER)->count(),
             'products' => Product::count(),
         ];
 

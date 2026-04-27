@@ -18,7 +18,8 @@ const SidebarItem = ({ href, icon: Icon, children, active }) => (
 
 export default function AdminLayout({ children }) {
   const { props, url } = usePage();
-  const { flash } = props;
+  const { flash, auth } = props;
+  const admin = auth.admin;
 
   useEffect(() => {
     if (flash.success) toast.success(flash.success);
@@ -49,6 +50,10 @@ export default function AdminLayout({ children }) {
         </nav>
 
         <div className="mt-auto pt-6 border-t border-gray-100">
+          <div className="px-2 mb-4">
+             <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Identity: {admin?.role_id === 2 ? 'Admin' : 'Dev'}</p>
+             <p className="text-sm font-bold text-gray-900 truncate">{admin?.name || 'Authorized User'}</p>
+          </div>
           <Link 
             method="post" 
             as="button" 
@@ -68,8 +73,8 @@ export default function AdminLayout({ children }) {
              {url.split('/')[2]?.replace('-', ' ') || 'Dashboard'}
            </h1>
            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
-                 A
+              <div className="w-10 h-10 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-bold uppercase">
+                 {admin?.name?.[0] || 'A'}
               </div>
            </div>
         </header>

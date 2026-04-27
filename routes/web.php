@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 // ── AUTH (Public) ───────────────────────────────────────────────────────────
-Route::middleware('guest')->group(function () {
+Route::middleware('guest:web')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -45,7 +45,7 @@ Route::middleware('guest')->group(function () {
 });
 
 // ── USER (Protected) ────────────────────────────────────────────────────────
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth:web'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
@@ -103,12 +103,12 @@ Route::middleware(['auth'])->group(function () {
 
 // ── ADMIN (Protected) ───────────────────────────────────────────────────────
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::middleware('guest')->group(function () {
+    Route::middleware('guest:admin')->group(function () {
         Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
         Route::post('/login', [AdminAuthController::class, 'login']);
     });
 
-    Route::middleware(['auth', 'admin'])->group(function () {
+    Route::middleware(['auth:admin', 'admin'])->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
         Route::post('banners/{banner}/toggle', [AdminBannerController::class, 'toggle'])->name('banners.toggle');
